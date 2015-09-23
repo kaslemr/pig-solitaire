@@ -11,17 +11,25 @@ class Player:
 
     def __init__(self):
         self.dice = dice
+        self.player_round_total = 0
+        self.player_score_total = 0
         pass
 
     def user_turn(self):
+        current_round = 1
         running_score = 0
+        self.player_round_total += current_round
+        self.player_score_total += running_score
+        print("Game point total: {}. This is Turn #{}.".format(self.player_score_total, self.player_round_total))
         while True:
             roll = self.dice.roll()
             running_score += roll
             print("You rolled a {}".format(roll))
             print("Your round total is {}.".format(running_score))
             if roll == 1:
-                print("Turn over. Computer's turn.")
+                self.player_score_total += running_score
+                self.running_score = c_running_score
+                print("End of turn #{}. Round total: {}. Game total: {}.".format(self.player_round_total, running_score, self.player_score_total))
                 return False
             else:
                 choice = input("Would you like to roll again? Please type Yes or No. ")
@@ -29,45 +37,54 @@ class Player:
                     print("------------------------")
                     continue
                 elif choice in ["No", "NO", "no"]:
-                    print("Your round total was {}. Computer's turn.".format(running_score))
+                    self.running_score = running_score
+                    self.player_score_total += running_score
+                    print("End of turn #{}. Round total: {}. Game total: {}.".format(self.player_round_total, running_score, self.player_score_total))
                     return False
-
-    def accumulation(self):
-        total_score =+ running_score
-        total_turns =+ turn
-        if total_turns == 7:
-            print("Game over!")
 
 class Computer:
 
     def __init__(self):
         self.dice = dice
-        pass
+        self.computer_round_total = int()
+        self.computer_score_total = int()
 
     def computer_turn(self):
-        self.running_score = 0
-        turn = 1
+        c_current_round = 1
+        c_running_score = 0
+        self.computer_round_total += c_current_round
+        self.computer_score_total += c_running_score
+        print("Game point total: {}. This is Turn #{}.".format(self.computer_score_total, self.computer_round_total))
         while True:
             roll = self.dice.roll()
-            running_score += roll
+            c_running_score += roll
             print("Computer rolled a {}".format(roll))
-            print("Computer's round total is {}.".format(running_score))
+            print("Computer's round total is {}.".format(c_running_score))
             if roll == 1:
-                print("Turn over. Player's turn.")
+                self.computer_score_total += c_running_score
+                self.running_score = c_running_score
+                print("End of turn #{}. Computer Round total: {}. Computer Game total: {}.".format(self.computer_round_total, c_running_score, self.computer_score_total))
+                self.computer_score = self.computer_score_total
+                self.computer_round = self.computer_round_total
                 return False
             else:
-                if running_score < 50:
+                if c_running_score < 50:
+                    print("Computer chooses to roll again.")
                     print("------------------------")
                     continue
                 else:
-                    print("Computer has passed. Computer's round total was {}. It's your turn!".format(running_score))
+                    self.running_score = c_running_score
+                    self.computer_score_total += c_running_score
+                    print("Computer has passed. End of turn #{}. Computer Round total: {}. Computer Game total: {}.".format(self.computer_round_total, c_running_score, self.computer_score_total))
+                    self.computer_score = self.computer_score_total
+                    self.computer_round = self.computer_round_total
                     return False
 
+computer = Computer()
+
 # Initiate user turn:
-   #matt = Player()
-    #matt.user_turn()
-
-
+   #player_a = Player()
+    #player_a.user_turn()
 # Initiate computer turn:
-   #matt = Computer()
-    #matt.computer_turn()
+   #player_b = Computer()
+    #player_b.computer_turn()
