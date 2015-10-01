@@ -10,12 +10,14 @@ dice = Dice()
 class Player:
 
     def __init__(self):
-        self.dice = dice
+        self.dice = Dice()
         self.player_round_total = 0
         self.player_score_total = 0
         pass
 
     def user_turn(self):
+        u_current_round = 1
+        u_running_score = 0
         current_round = 1
         running_score = 0
         self.player_round_total += current_round
@@ -28,7 +30,7 @@ class Player:
             print("Your round total is {}.".format(running_score))
             if roll == 1:
                 self.player_score_total += running_score
-                self.running_score = c_running_score
+                self.running_score = running_score
                 print("End of turn #{}. Round total: {}. Game total: {}.".format(self.player_round_total, running_score, self.player_score_total))
                 return False
             else:
@@ -80,11 +82,17 @@ class Computer:
                     self.computer_round = self.computer_round_total
                     return False
 
-computer = Computer()
+class Game:
 
-# Initiate user turn:
-   #player_a = Player()
-    #player_a.user_turn()
+    def __init__(self, player, computer):
+        self.player = player
+        self.computer = computer
+
+    def play_game
+        self.player.user_turn()
+
+player_a = Player()
 # Initiate computer turn:
-   #player_b = Computer()
-    #player_b.computer_turn()
+player_b = Computer()
+
+game = Game(player_a, player_b)
