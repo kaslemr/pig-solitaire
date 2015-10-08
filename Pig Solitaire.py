@@ -5,94 +5,96 @@ class Dice:
     def roll(self):
         return random.randint(1,6)
 
-dice = Dice()
+class Computer_hard_mode:
+
+    def __init__(self, rounds=7):
+        self.dice = Dice()
+        self.rounds = rounds
+        self.score_total = 0
+
+    def computer_turn(self):
+        round_count = 0
+        counter = 0
+        self.roll_number = 0
+        self.game_score = 0
+        self.round_score = 0
+        list_scores = []
+        while round_count < self.rounds:
+            round_count += 1
+            print("Round #{}. Game total: {}.".format(round_count, self.game_score))
+            counter = 0
+            while counter < 1:
+                roll = self.dice.roll()
+                print("Computer rolls a {}".format(roll))
+                if roll == 1:
+                    self.round_score = 0
+                    list_scores.append(self.round_score)
+                    print("End of Round #{}. Round Score: {}. Total Score: {}.".format(round_count, self.round_score, self.game_score))
+                    print("------------------------")
+                    counter = 1
+                else:
+                    self.round_score += roll
+                    if self.round_score < 20:
+                        print("Computer chooses to roll again.")
+                        print("------------------------")
+                        continue
+                    else:
+                        self.game_score += self.round_score
+                        list_scores.append(self.round_score)
+                        print("Computer ends turn. Round Score: {}.".format(self.round_score))
+                        print("------------------------")
+                        self.round_score = 0
+                        counter = 1
+        print("Computer scored {} points in {} rounds.".format(self.game_score, self.rounds))
 
 class Player:
 
-    def __init__(self):
+    def __init__(self, rounds=7):
         self.dice = Dice()
-        self.player_round_total = 0
-        self.player_score_total = 0
-        pass
+        self.rounds = rounds
+        self.score_total = 0
 
-    def user_turn(self):
-        u_current_round = 1
-        u_running_score = 0
-        current_round = 1
-        running_score = 0
-        self.player_round_total += current_round
-        self.player_score_total += running_score
-        print("Game point total: {}. This is Turn #{}.".format(self.player_score_total, self.player_round_total))
-        while True:
-            roll = self.dice.roll()
-            running_score += roll
-            print("You rolled a {}".format(roll))
-            print("Your round total is {}.".format(running_score))
-            if roll == 1:
-                self.player_score_total += running_score
-                self.running_score = running_score
-                print("End of turn #{}. Round total: {}. Game total: {}.".format(self.player_round_total, running_score, self.player_score_total))
-                return False
-            else:
-                choice = input("Would you like to roll again? Please type Yes or No. ")
-                if choice in ["Yes", "yes", "YES"]:
+    def player_turn(self):
+        round_count = 0
+        counter = 0
+        self.roll_number = 0
+        self.game_score = 0
+        self.round_score = 0
+        list_scores = []
+        while round_count < self.rounds:
+            round_count += 1
+            print("Round #{}. Game total: {}.".format(round_count, self.game_score))
+            counter = 0
+            while counter < 1:
+                roll = self.dice.roll()
+                print("You rolled a {}.".format(roll))
+                print("------------------------")
+                if roll == 1:
+                    self.round_score = 0
+                    list_scores.append(self.round_score)
+                    print("End of Round #{}. Round Score: {}. Total Score: {}.".format(round_count, self.round_score, self.game_score))
                     print("------------------------")
-                    continue
-                elif choice in ["No", "NO", "no"]:
-                    self.running_score = running_score
-                    self.player_score_total += running_score
-                    print("End of turn #{}. Round total: {}. Game total: {}.".format(self.player_round_total, running_score, self.player_score_total))
-                    return False
-
-class Computer:
-
-    def __init__(self):
-        self.dice = dice
-        self.computer_round_total = int()
-        self.computer_score_total = int()
-
-    def computer_turn(self):
-        c_current_round = 1
-        c_running_score = 0
-        self.computer_round_total += c_current_round
-        self.computer_score_total += c_running_score
-        print("Game point total: {}. This is Turn #{}.".format(self.computer_score_total, self.computer_round_total))
-        while True:
-            roll = self.dice.roll()
-            c_running_score += roll
-            print("Computer rolled a {}".format(roll))
-            print("Computer's round total is {}.".format(c_running_score))
-            if roll == 1:
-                self.computer_score_total += c_running_score
-                self.running_score = c_running_score
-                print("End of turn #{}. Computer Round total: {}. Computer Game total: {}.".format(self.computer_round_total, c_running_score, self.computer_score_total))
-                self.computer_score = self.computer_score_total
-                self.computer_round = self.computer_round_total
-                return False
-            else:
-                if c_running_score < 50:
-                    print("Computer chooses to roll again.")
-                    print("------------------------")
-                    continue
+                    counter = 1
                 else:
-                    self.running_score = c_running_score
-                    self.computer_score_total += c_running_score
-                    print("Computer has passed. End of turn #{}. Computer Round total: {}. Computer Game total: {}.".format(self.computer_round_total, c_running_score, self.computer_score_total))
-                    self.computer_score = self.computer_score_total
-                    self.computer_round = self.computer_round_total
-                    return False
+                    self.round_score += roll
+                    choice = input("Would you like to roll again? Please type Yes or No. ")
+                    if choice in ["Yes", "yes", "YES"]:
+                        print("------------------------")
+                        continue
+                    elif choice in ["No", "NO", "no"]:
+                        self.game_score += self.round_score
+                        list_scores.append(self.round_score)
+                        print("You've ended your turn. Round Score: {}.".format(self.round_score))
+                        print("------------------------")
+                        self.round_score = 0
+                        counter = 1
+        print("End of game. You scored {} points in {} rounds.".format(self.game_score, self.rounds))
 
-class Game:
+#Initiate user turn:
+    #matt = Computer_hard_mode()
+    #matt.computer_turn()
 
-    def __init__(self, player, computer):
-        self.player = player
-        self.computer = computer
-
-    def play_game
-        self.player.user_turn()
-
-player_a = Player()
-# Initiate computer turn:
-player_b = Computer()
-
-game = Game(player_a, player_b)
+#Initiate computer turn:
+    #computer = Computer_hard_mode()
+    #computer.computer_turn()
+    
